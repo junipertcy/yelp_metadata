@@ -114,10 +114,10 @@ def viz_heat(df, title='default', outpath='./test.pdf'):
 
 
 if __name__ == '__main__':
-    if not os.path.exists('user_source.json'):
+    if not os.path.exists('./count/user_source.json'):
         results = cal_rest_state()
-        json.dump(results, open('user_source.json', 'w'))
+        json.dump(results, open('./count/user_source.json', 'w'))
     else:
-        results = json.load(open('user_source.json'))
+        results = json.load(open('./count/user_source.json'))
     df = pd.DataFrame(results)
     viz_heat(df, 'Region Distributions of Restaurant Comsumers')

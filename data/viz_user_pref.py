@@ -4,6 +4,8 @@ import numpy as np
 import ast
 import pandas as pd
 from collections import OrderedDict
+import json
+import os
 
 
 def cal_score(column_idx=2, state_idx=5, cat_idx=-1):
@@ -81,6 +83,10 @@ def viz_heat(df, title='default', outpath='./test.pdf'):
 
 if __name__ == '__main__':
     for idx, title in [(2, 'User Average Stars') , (3, 'User Review Average Counts')]:
-        test = cal_score(column_idx=idx, state_idx=5, cat_idx=-1)
+        if not os.path.exists('counts/' + '_'.join(title.split()) + '.json'):
+            test = cal_score(column_idx=idx, state_idx=5, cat_idx=-1)
+            json.dump(test, open('counts/' + '_'.join(title.split()) + '.json', 'w'))
+        else:
+            test = json.load(open('counts/' + '_'.join(title.split()) + '.json'))
         df = pd.DataFrame(test)
         viz_heat(df, title, title+'.pdf')
